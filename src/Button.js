@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 
 class Button extends Component {
+    getInitialState() {
+        return {
+        }
+    }
+
     render() {
-        return <input type='image' className='button' src={this.props.icon} onClick={this.props.onClick} alt=''/>;
+        return <button className='btn-primary' onClick={this.props.perform}><img src={this.props.icon} alt='icon'/></button>;
     }
 }
 
@@ -13,7 +18,7 @@ class ChickenButton extends Component {
     }
 
     render() {
-        return <Button onClick={this.performCluck} icon={process.env.PUBLIC_URL + 'chicken.png'} />
+        return <Button perform={this.performCluck} icon={process.env.PUBLIC_URL + 'chicken.png'} />
     }
 }
 
@@ -24,9 +29,29 @@ class CowButton extends Component {
     }
 
     render() {
-        return <Button onClick={this.performMoo} icon={process.env.PUBLIC_URL + 'cow.png'} />
+        return <Button perform={this.performMoo} icon={process.env.PUBLIC_URL + 'cow.png'} />
     }
 }
+
+/*
+    Button:
+        props:
+            icon: string
+            audio: string
+        state:
+            gain: GainNode
+        initialState:
+            gain: 0
+        events:
+            onClick: toggle gain between 0 & .25
+
+    FoodGroup:
+        props:
+            title: string
+            numButtons: int
+        state:
+            selectedIndex: int
+ */
 
 export {
     ChickenButton,
