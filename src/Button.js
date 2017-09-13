@@ -1,35 +1,43 @@
 import React, { Component } from 'react';
 
 class Button extends Component {
-    getInitialState() {
-        return {
-        }
+    constructor(props) {
+        super(props);
     }
 
+    toggleAudio = () => {
+        alert(this.props.audio);
+    };
+
     render() {
-        return <button className='btn-primary' onClick={this.props.perform}><img src={this.props.icon} alt='icon'/></button>;
+        return (
+            <button className='btn-primary' onClick={this.toggleAudio}>
+                <img src={this.props.icon} alt='icon'/>
+            </button>
+        );
     }
 }
 
-class ChickenButton extends Component {
-    performCluck() {
-        const audio = new Audio(process.env.PUBLIC_URL + 'ukulele.mp3');
-        audio.play();
+class Card extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    createButton(track) {
+        return <p>{track}</p>
+    }
+
+    createButtons(tracks) {
+        return tracks.map(this.createButton);
     }
 
     render() {
-        return <Button perform={this.performCluck} icon={process.env.PUBLIC_URL + 'chicken.png'} />
-    }
-}
-
-class CowButton extends Component {
-    performMoo() {
-        const audio = new Audio(process.env.PUBLIC_URL + 'energy.mp3');
-        audio.play();
-    }
-
-    render() {
-        return <Button perform={this.performMoo} icon={process.env.PUBLIC_URL + 'cow.png'} />
+        return (
+            <div>
+                <h3>{this.props.title}</h3>
+                {this.createButtons(this.props.tracks)}
+            </div>
+        );
     }
 }
 
@@ -45,7 +53,7 @@ class CowButton extends Component {
         events:
             onClick: toggle gain between 0 & .25
 
-    FoodGroup:
+    Card:
         props:
             title: string
             numButtons: int
@@ -54,6 +62,5 @@ class CowButton extends Component {
  */
 
 export {
-    ChickenButton,
-    CowButton
+    Card,
 };
