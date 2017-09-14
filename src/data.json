@@ -1,0 +1,14 @@
+{
+  "drums": {
+    "tracks": [
+      "drums01-83bpm.wav",
+      "drums02-160bpm.wav"
+    ]
+  },
+  "bass": {
+    "tracks": [
+      "bass01-166bpm.wav",
+      "bass02-80bpm.wav"
+    ]
+  }
+}

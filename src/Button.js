@@ -10,9 +10,14 @@ class Button extends Component {
     };
 
     render() {
+        // <img src={this.props.icon} alt='icon'/>
+        this.className = 'btn-primary';
+        if(this.props.selected) {
+            this.classname = this.className + ' active';
+        }
         return (
-            <button className='btn-primary' onClick={this.toggleAudio}>
-                <img src={this.props.icon} alt='icon'/>
+            <button className={this.className} onClick={this.toggleAudio}>
+                press me!
             </button>
         );
     }
@@ -24,7 +29,7 @@ class Card extends Component {
     }
 
     createButton(track) {
-        return <p>{track}</p>
+        return <Button audio={track}/>
     }
 
     createButtons(tracks) {
