@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Howl } from 'howler'
 import data from './data.json'
 import './App.css';
 
@@ -78,7 +79,10 @@ class InstrumentTable extends Component {
     //     )
     // }
     playTrack = (track) => {
-        alert(track);
+        var sound = new Howl({
+            src: [track]
+        });
+        sound.play();
     };
 
     render() {
