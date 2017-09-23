@@ -43,7 +43,7 @@ class InstrumentCard extends Component {
         this.setState({
             selected: track
         });
-        this.props.playTrack(track);
+        this.props.playTrack(track, this.props.instrument);
     };
 
     createButton = (track) => {
@@ -71,18 +71,60 @@ class InstrumentCard extends Component {
 }
 
 class InstrumentTable extends Component {
-    // createCard(instrument, tracks) {
-    //     return (
-    //         <td>
-    //             <InstrumentCard instrument={instrument} tracks={tracks} />
-    //         </td>
-    //     )
-    // }
-    playTrack = (track) => {
-        var sound = new Howl({
-            src: [track]
-        });
-        sound.play();
+    constructor(props) {
+        super(props);
+        this.state = {
+            drums: new Howl({
+                src: ['drum-tracks.wav'],
+                sprite: {
+                    one: [0, 2892, true],
+                    two: [5892, 11892, true]
+                }
+            }),
+            bass: new Howl({
+                src: ['bass-tracks.wav'],
+                sprite: {
+                    one: [0, 11566, true],
+                    two: [14566, 26566, true]
+                }
+            }),
+            selectedDrumTrack: '',
+            selectedBassTrack: ''
+        }
+    }
+
+    playTrack = (track, instrument) => {
+        // if(this.state.drums !== null) {
+        //     this.state.drums.stop();
+        // }
+        // if(this.state.bass !== null) {
+        //     this.state.bass.stop();
+        // }
+        // switch(instrument) {
+        //     case 'drums':
+        //         this.setState({
+        //             drums: new Howl({
+        //                 src: [track]
+        //             })
+        //         });
+        //         break;
+        //     case 'bass':
+        //         this.setState({
+        //             bass: new Howl({
+        //                 src: [track]
+        //             })
+        //         });
+        //         break;
+        //     default:
+        //         console.log('throw exception');
+        //         break;
+        // }
+        // if(this.state.drums) {
+        //     this.state.drums.play();
+        // }
+        // if(this.state.bass) {
+        //     this.state.bass.play();
+        // }
     };
 
     render() {
