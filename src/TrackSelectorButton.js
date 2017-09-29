@@ -8,7 +8,7 @@ class TrackSelectorButton extends Component {
     render() {
         let className = 'btn-primary';
         if(this.props.selected) {
-            className = 'btn-primary active';
+            className = 'btn-danger';
         }
         return (
             <button className={className} onClick={this.selectTrack}>

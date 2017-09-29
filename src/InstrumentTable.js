@@ -16,33 +16,40 @@ class InstrumentTable extends Component {
 
     stopSelectedTracks = () => {
         for(let instrument in this.state.selectedTracks) {
-            this.howlers[instrument].stop();
+            if(this.howlers[instrument].playing()) {
+                this.howlers[instrument].stop();
+            }
         }
     };
 
-    selectTrack = (instrument, track) => {
-        // TODO:
-        this.stopSelectedTracks();
+    updateSelectedTracks = (instrument, track) => {
         let selectedTracks = Object.assign({}, this.state.selectedTracks);
+
         if(selectedTracks[instrument] === track) {
             delete selectedTracks[instrument];
         }
         else {
             selectedTracks[instrument] = track;
         }
-        for(let key in this.state.selectedTracks) {
-            selectedTracks[key] = this.state.selectedTracks[key];
-        }
-        this.setState({selectedTracks});
-        this.playSelectedTracks();
+        this.setState({selectedTracks}, this.playSelectedTracks);
     };
 
     playSelectedTracks = () => {
         // TODO: playSelectedTracks the selected tracks for each instrument
         for(let t in this.state.selectedTracks) {
-            let track = this.state.selectedTracks[t];
+            let track = this.state.selectedTracks[t].title;
             this.howlers[t].play(track);
         }
+    };
+
+    selectTrack = (instrument, track) => {
+        // TODO: when a different track for the same instrument is selected, the previous track should be unselected
+        // instrument: str (drum, bass...), track: str (drums01-83bpm.wav)
+        // stop all tracks
+        // update selected tracks
+        //
+        this.stopSelectedTracks();
+        this.updateSelectedTracks(instrument, track);
     };
 
     createInstrumentCards = () => {
