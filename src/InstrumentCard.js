@@ -13,30 +13,33 @@ class InstrumentName extends Component {
 
 class InstrumentCard extends Component {
     selectTrack = (track) => {
-        this.setState({
-            selected: track
-        });
-        this.props.selectTrack(this.props.instrument, track);
+        this.props.selectTrack(this.props.name, track);
     };
 
-    createButton = (track) => {
-        let selected = false;
+    createTrackSelectorButton = (track) => {
+        let selected = this.props.selectedTrack === track;
         return (
             <div>
-                <TrackSelectorButton track={track} selectTrack={this.selectTrack} selected={selected} />
+                <TrackSelectorButton
+                    icon={this.props.icon}
+                    track={track}
+                    selected={selected}
+                    selectTrack={this.selectTrack} />
             </div>
-        )
+        );
+    };
+
+    createTrackSelectorButtons = () => {
+        return this.props.tracks.map(this.createTrackSelectorButton);
     };
 
     render() {
-        let tracks = this.props.tracks;
-
         return (
             <div>
-                <InstrumentName name={this.props.instrument} />
-                {tracks.map(this.createButton)}
+                <InstrumentName name={this.props.name} />
+                {this.createTrackSelectorButtons()}
             </div>
-        )
+        );
     }
 }
 

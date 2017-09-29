@@ -12,7 +12,7 @@ class TrackSelectorButton extends Component {
         }
         return (
             <button className={className} onClick={this.selectTrack}>
-                {this.props.track}
+                <img src={this.props.icon} alt='' />
             </button>
         );
     }

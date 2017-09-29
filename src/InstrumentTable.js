@@ -1,54 +1,93 @@
-import { Howl } from 'howler'
 import React, { Component } from 'react'
+import { Howl } from 'howler'
 import InstrumentCard from './InstrumentCard'
 
 class InstrumentTable extends Component {
     constructor(props) {
         super(props);
+        this.howlers = this.createHowlers(this.props.data);
+        for(let instrument in this.howlers) {
+            console.log(this.howlers[instrument].state());
+        }
         this.state = {
-            drums: new Howl({
-                src: ['drum-tracks.wav'],
-                sprite: {
-                    'drums01-83bpm.wav': [0, 2892, true],
-                    two: [5892, 6000, true]
-                }
-            }),
-            bass: new Howl({
-                src: ['bass-tracks.wav'],
-                sprite: {
-                    'bass01-166bpm.wav': [0, 11566, true],
-                    two: [14566, 12000, true]
-                }
-            }),
             selectedTracks: {}
         }
     }
 
-    selectTrack = (instrument, track) => {
-        let selectedTracks = this.state.selectedTracks;
-        selectedTracks[instrument] = track;
-        this.setState(selectedTracks);
-        this.play();
-    };
-
-    play = () => {
-        for(let t in this.state.selectedTracks) {
-            let track = this.state.selectedTracks[t];
-            this.state.t.play(track);
+    stopSelectedTracks = () => {
+        for(let instrument in this.state.selectedTracks) {
+            this.howlers[instrument].stop();
         }
     };
 
-    render() {
-        let data = this.props.data;
+    selectTrack = (instrument, track) => {
+        // TODO:
+        this.stopSelectedTracks();
+        let selectedTracks = Object.assign({}, this.state.selectedTracks);
+        if(selectedTracks[instrument] === track) {
+            delete selectedTracks[instrument];
+        }
+        else {
+            selectedTracks[instrument] = track;
+        }
+        for(let key in this.state.selectedTracks) {
+            selectedTracks[key] = this.state.selectedTracks[key];
+        }
+        this.setState({selectedTracks});
+        this.playSelectedTracks();
+    };
 
+    playSelectedTracks = () => {
+        // TODO: playSelectedTracks the selected tracks for each instrument
+        for(let t in this.state.selectedTracks) {
+            let track = this.state.selectedTracks[t];
+            this.howlers[t].play(track);
+        }
+    };
+
+    createInstrumentCards = () => {
+        let data = this.props.data;
+        let instruments = [];
+        for(let instrument in data) {
+            let selectedTrack = this.state.selectedTracks[instrument];
+            let tracks = data[instrument].tracks;
+            let icon = data[instrument].icon;
+            instruments.push(
+                <td>
+                    <InstrumentCard
+                        name={instrument}
+                        tracks={tracks}
+                        icon={icon}
+                        selectedTrack={selectedTrack}
+                        selectTrack={this.selectTrack} />
+                </td>);
+        }
+        return instruments;
+    };
+
+    createHowlers = (data) => {
+        let instruments = {};
+        for(let instrument in data) {
+            instruments[instrument] = new Howl({
+                src: [data[instrument].src],
+                sprite: this.createSprites(data[instrument].tracks)
+            });
+        }
+        return instruments;
+    };
+
+    createSprites = (tracks) => {
+        let sprites = {};
+        for(let track in tracks) {
+            sprites[tracks[track].title] = [tracks[track].start, tracks[track].duration, true];
+        }
+        return sprites;
+    };
+
+    render() {
         return (
             <table className='table'>
-                <td>
-                    <InstrumentCard instrument='drums' tracks={data.drums.tracks} selectTrack={this.selectTrack} />
-                </td>
-                <td>
-                    <InstrumentCard instrument='bass' tracks={data.bass.tracks}  selectTrack={this.selectTrack} />
-                </td>
+                {this.createInstrumentCards()}
             </table>
         )
     }
