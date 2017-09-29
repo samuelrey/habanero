@@ -1,14 +1,34 @@
 {
   "drums": {
+    "src": "drum-tracks.wav",
     "tracks": [
-      "drums01-83bpm.wav",
-      "drums02-160bpm.wav"
-    ]
+      {
+        "title": "drums01-83bpm.wav",
+        "start": 0,
+        "duration": 2892
+      },
+      {
+        "title": "drums02-160bpm.wav",
+        "start": 5892,
+        "duration": 6000
+      }
+    ],
+    "icon": "drums-icon.png"
   },
   "bass": {
+    "src": "bass-tracks.wav",
     "tracks": [
-      "bass01-166bpm.wav",
-      "bass02-80bpm.wav"
-    ]
+      {
+        "title": "bass01-166bpm.wav",
+        "start": 0,
+        "duration": 11566
+      },
+      {
+        "title": "bass02-80bpm.wav",
+        "start": 14566,
+        "duration": 12000
+      }
+    ],
+    "icon": "bass-icon.png"
   }
 }
