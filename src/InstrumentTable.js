@@ -35,21 +35,20 @@ class InstrumentTable extends Component {
     };
 
     playSelectedTracks = () => {
-        // TODO: playSelectedTracks the selected tracks for each instrument
         for(let t in this.state.selectedTracks) {
             let track = this.state.selectedTracks[t].title;
             this.howlers[t].play(track);
         }
     };
 
-    selectTrack = (instrument, track) => {
-        // TODO: when a different track for the same instrument is selected, the previous track should be unselected
-        // instrument: str (drum, bass...), track: str (drums01-83bpm.wav)
-        // stop all tracks
-        // update selected tracks
-        //
+    selectTrack = async (instrument, track) => {
         this.stopSelectedTracks();
+        await this.sleep(300);
         this.updateSelectedTracks(instrument, track);
+    };
+
+    sleep = (time) => {
+        return new Promise(resolve => setTimeout(resolve, time));
     };
 
     createInstrumentCards = () => {
